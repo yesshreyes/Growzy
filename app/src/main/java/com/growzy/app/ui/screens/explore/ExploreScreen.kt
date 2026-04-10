@@ -1,11 +1,25 @@
 package com.growzy.app.ui.screens.explore
 
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
+import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.growzy.app.GrowzyApp
 
 @Composable
 fun ExploreScreen(
     onFundClick: (Int) -> Unit
 ) {
-    Text(text = "Explore Screen 🚀")
+
+    val app = LocalContext.current.applicationContext as GrowzyApp
+
+    val viewModel: ExploreViewModel = viewModel(
+        factory = ExploreViewModelFactory(app.container.fundRepository)
+    )
+
+    val state by viewModel.state.collectAsState()
+
+    ExploreContent(
+        state = state,
+        onFundClick = onFundClick
+    )
 }

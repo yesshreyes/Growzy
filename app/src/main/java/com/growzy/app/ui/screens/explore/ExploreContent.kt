@@ -1,9 +1,13 @@
 package com.growzy.app.ui.screens.explore
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -15,35 +19,77 @@ fun ExploreContent(
     onFundClick: (Int) -> Unit
 ) {
 
+    when {
+        state.isLoading -> {
+            LoadingView()
+        }
+
+        state.error != null -> {
+            ErrorView(message = state.error)
+        }
+
+        state.indexFunds.isEmpty() &&
+                state.bluechipFunds.isEmpty() &&
+                state.taxFunds.isEmpty() &&
+                state.largeCapFunds.isEmpty() -> {
+            EmptyView()
+        }
+
+        else -> {
+            ExploreSuccessContent(state, onFundClick)
+        }
+    }
+}
+
+@Composable
+fun ExploreSuccessContent(
+    state: ExploreUiState,
+    onFundClick: (Int) -> Unit
+) {
+
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)
     ) {
 
-        CategorySection(
-            title = "Index Funds",
-            funds = state.indexFunds,
-            onFundClick = onFundClick
-        )
+        CategorySection("Index Funds", state.indexFunds, onFundClick)
+        CategorySection("Bluechip Funds", state.bluechipFunds, onFundClick)
+        CategorySection("Tax Saver (ELSS)", state.taxFunds, onFundClick)
+        CategorySection("Large Cap Funds", state.largeCapFunds, onFundClick)
+    }
+}
 
-        CategorySection(
-            title = "Bluechip Funds",
-            funds = state.bluechipFunds,
-            onFundClick = onFundClick
-        )
+@Composable
+fun LoadingView() {
 
-        CategorySection(
-            title = "Tax Saver (ELSS)",
-            funds = state.taxFunds,
-            onFundClick = onFundClick
-        )
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        CircularProgressIndicator()
+    }
+}
 
-        CategorySection(
-            title = "Large Cap Funds",
-            funds = state.largeCapFunds,
-            onFundClick = onFundClick
-        )
+@Composable
+fun ErrorView(message: String) {
+
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        Text(text = message)
+    }
+}
+
+@Composable
+fun EmptyView() {
+
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        Text(text = "No funds available")
     }
 }
 

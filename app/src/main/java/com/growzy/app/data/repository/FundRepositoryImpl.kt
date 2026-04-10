@@ -1,7 +1,7 @@
 package com.growzy.app.data.repository
 
-import com.growzy.app.data.local.ExploreDao
-import com.growzy.app.data.local.ExploreFundEntity
+import com.growzy.app.data.local.dao.ExploreDao
+import com.growzy.app.data.local.entity.ExploreFundEntity
 import com.growzy.app.data.remote.api.MfApiService
 import com.growzy.app.data.remote.dto.FundDetailsDto
 import com.growzy.app.data.remote.dto.FundSearchDto

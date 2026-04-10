@@ -1,4 +1,4 @@
-package com.growzy.app.data.local
+package com.growzy.app.data.local.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

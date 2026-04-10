@@ -12,15 +12,18 @@ class AppContainer(context: Context) {
 
     private val apiService: MfApiService = RetrofitClient.api
 
-    val fundRepository: FundRepository by lazy {
-        FundRepositoryImpl(apiService, exploreDao)
-    }
-
-    private val database = Room.databaseBuilder(
+    private val database: AppDatabase = Room.databaseBuilder(
         context,
         AppDatabase::class.java,
         "growzy_db"
-    ).build()
+    )
+        .fallbackToDestructiveMigration()
+        .build()
 
     private val exploreDao = database.exploreDao()
+    val watchlistDao = database.watchlistDao()
+
+    val fundRepository: FundRepository by lazy {
+        FundRepositoryImpl(apiService, exploreDao)
+    }
 }

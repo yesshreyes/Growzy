@@ -10,3 +10,6 @@ object Watchlist
 
 @Serializable
 data class Product(val schemeCode: Int)
+
+@Serializable
+data class ViewAll(val category: String)

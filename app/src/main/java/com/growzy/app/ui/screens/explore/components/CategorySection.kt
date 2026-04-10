@@ -23,14 +23,18 @@ import com.growzy.app.data.remote.dto.FundSearchDto
 fun CategorySection(
     title: String,
     funds: List<FundSearchDto>,
-    onFundClick: (Int) -> Unit
+    onFundClick: (Int) -> Unit,
+    onViewAllClick: () -> Unit
 ) {
 
     Column(
         modifier = Modifier.padding(bottom = 24.dp)
     ) {
 
-        CategoryHeader(title = title)
+        CategoryHeader(
+            title = title,
+            onViewAllClick = onViewAllClick
+        )
 
         LazyVerticalGrid(
             columns = GridCells.Fixed(2),
@@ -62,7 +66,9 @@ fun CategoryHeader(
             style = MaterialTheme.typography.titleLarge
         )
 
-        TextButton(onClick = onViewAllClick) {
+        TextButton(
+            onClick = { onViewAllClick() }
+        ) {
             Text("View All")
         }
     }

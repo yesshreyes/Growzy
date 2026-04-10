@@ -18,7 +18,8 @@ import com.growzy.app.ui.screens.explore.components.CategorySection
 @Composable
 fun ExploreContent(
     state: ExploreUiState,
-    onFundClick: (Int) -> Unit
+    onFundClick: (Int) -> Unit,
+    onViewAllClick: (String) -> Unit
 ) {
 
     when {
@@ -38,7 +39,11 @@ fun ExploreContent(
         }
 
         else -> {
-            ExploreSuccessContent(state, onFundClick)
+            ExploreSuccessContent(
+                state = state,
+                onFundClick = onFundClick,
+                onViewAllClick = onViewAllClick
+            )
         }
     }
 }
@@ -46,7 +51,8 @@ fun ExploreContent(
 @Composable
 fun ExploreSuccessContent(
     state: ExploreUiState,
-    onFundClick: (Int) -> Unit
+    onFundClick: (Int) -> Unit,
+    onViewAllClick: (String) -> Unit
 ) {
 
     Column(
@@ -57,11 +63,33 @@ fun ExploreSuccessContent(
 
         Spacer(modifier = Modifier.height(12.dp))
 
-        CategorySection("Index Funds", state.indexFunds, onFundClick)
-        CategorySection("Bluechip Funds", state.bluechipFunds, onFundClick)
-        CategorySection("Tax Saver (ELSS)", state.taxFunds, onFundClick)
-        CategorySection("Large Cap Funds", state.largeCapFunds, onFundClick)
+        CategorySection(
+            title = "Index Funds",
+            funds = state.indexFunds,
+            onFundClick = onFundClick,
+            onViewAllClick = { onViewAllClick("index") }
+        )
 
+        CategorySection(
+            title = "Bluechip Funds",
+            funds = state.bluechipFunds,
+            onFundClick = onFundClick,
+            onViewAllClick = { onViewAllClick("bluechip") }
+        )
+
+        CategorySection(
+            title = "Tax Saver (ELSS)",
+            funds = state.taxFunds,
+            onFundClick = onFundClick,
+            onViewAllClick = { onViewAllClick("tax") }
+        )
+
+        CategorySection(
+            title = "Large Cap Funds",
+            funds = state.largeCapFunds,
+            onFundClick = onFundClick,
+            onViewAllClick = { onViewAllClick("large cap") }
+        )
         Spacer(modifier = Modifier.height(16.dp))
     }
 }
@@ -116,6 +144,7 @@ fun ExploreContentPreview() {
             taxFunds = dummyFunds,
             largeCapFunds = dummyFunds
         ),
-        onFundClick = {}
+        onFundClick = {},
+        onViewAllClick = {}
     )
 }

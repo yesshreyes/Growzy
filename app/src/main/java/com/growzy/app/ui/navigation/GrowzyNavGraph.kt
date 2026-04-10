@@ -6,6 +6,7 @@ import androidx.navigation.toRoute
 import com.growzy.app.ui.screens.explore.ExploreScreen
 import com.growzy.app.ui.screens.watchlist.WatchlistScreen
 import com.growzy.app.ui.screens.product.ProductScreen
+import com.growzy.app.ui.screens.search.SearchScreen
 import com.growzy.app.ui.screens.view.ViewAllScreen
 
 @Composable
@@ -48,6 +49,14 @@ fun GrowzyNavGraph() {
 
             ViewAllScreen(
                 category = args.category
+            )
+        }
+
+        composable<Search> {
+            SearchScreen(
+                onFundClick = { schemeCode ->
+                    navController.navigate(Product(schemeCode))
+                }
             )
         }
     }

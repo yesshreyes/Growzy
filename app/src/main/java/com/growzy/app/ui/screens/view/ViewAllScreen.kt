@@ -26,6 +26,7 @@ fun ViewAllScreen(
 
     ViewAllContent(
         state = state,
+        onLoadMore = { viewModel.loadMore() },
         onFundClick = onFundClick
     )
 }

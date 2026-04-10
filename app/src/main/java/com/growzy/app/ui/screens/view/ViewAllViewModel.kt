@@ -16,11 +16,15 @@ class ViewAllViewModel(
     private val _state = MutableStateFlow(ViewAllUiState())
     val state: StateFlow<ViewAllUiState> = _state
 
+    private val pageSize = 10
+    private var currentIndex = 0
+    private var isLoadingMore = false
+
     init {
-        loadFunds()
+        loadInitial()
     }
 
-    private fun loadFunds() {
+    private fun loadInitial() {
         viewModelScope.launch {
 
             _state.value = _state.value.copy(isLoading = true)
@@ -28,8 +32,16 @@ class ViewAllViewModel(
             val result = repository.searchFunds(category)
 
             if (result is Resource.Success) {
+
+                val all = result.data
+
+                val firstPage = all.take(pageSize)
+
+                currentIndex = firstPage.size
+
                 _state.value = ViewAllUiState(
-                    funds = result.data,
+                    allFunds = all,
+                    visibleFunds = firstPage,
                     isLoading = false
                 )
             } else {
@@ -38,6 +50,35 @@ class ViewAllViewModel(
                     error = "Failed to load"
                 )
             }
+        }
+    }
+
+    fun loadMore() {
+        if (isLoadingMore) return
+
+        val currentState = _state.value
+
+        if (currentIndex >= currentState.allFunds.size) return
+
+        viewModelScope.launch {
+
+            isLoadingMore = true
+
+            _state.value = currentState.copy(isLoadingMore = true)
+
+            val nextIndex = (currentIndex + pageSize)
+                .coerceAtMost(currentState.allFunds.size)
+
+            val newItems = currentState.allFunds.subList(currentIndex, nextIndex)
+
+            currentIndex = nextIndex
+
+            _state.value = currentState.copy(
+                visibleFunds = currentState.visibleFunds + newItems,
+                isLoadingMore = false
+            )
+
+            isLoadingMore = false
         }
     }
 }

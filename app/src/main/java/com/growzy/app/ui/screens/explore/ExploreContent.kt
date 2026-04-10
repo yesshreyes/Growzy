@@ -2,7 +2,9 @@ package com.growzy.app.ui.screens.explore
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
@@ -50,16 +52,19 @@ fun ExploreSuccessContent(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp)
+            .padding(horizontal = 16.dp)
     ) {
+
+        Spacer(modifier = Modifier.height(12.dp))
 
         CategorySection("Index Funds", state.indexFunds, onFundClick)
         CategorySection("Bluechip Funds", state.bluechipFunds, onFundClick)
         CategorySection("Tax Saver (ELSS)", state.taxFunds, onFundClick)
         CategorySection("Large Cap Funds", state.largeCapFunds, onFundClick)
+
+        Spacer(modifier = Modifier.height(16.dp))
     }
 }
-
 @Composable
 fun LoadingView() {
 

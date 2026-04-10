@@ -13,6 +13,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -25,27 +26,17 @@ fun CategorySection(
     onFundClick: (Int) -> Unit
 ) {
 
-    Column(modifier = Modifier.padding(bottom = 20.dp)) {
+    Column(
+        modifier = Modifier.padding(bottom = 24.dp)
+    ) {
 
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Text(text = title, style = MaterialTheme.typography.titleMedium)
-
-            Text(
-                text = "View All",
-                color = MaterialTheme.colorScheme.primary
-            )
-        }
-
-        Spacer(modifier = Modifier.height(8.dp))
+        CategoryHeader(title = title)
 
         LazyVerticalGrid(
             columns = GridCells.Fixed(2),
-            modifier = Modifier.heightIn(max = 220.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
+            verticalArrangement = Arrangement.spacedBy(12.dp),
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
+            modifier = Modifier.heightIn(max = 240.dp)
         ) {
             items(funds) { fund ->
                 FundCard(fund, onFundClick)
@@ -54,3 +45,25 @@ fun CategorySection(
     }
 }
 
+@Composable
+fun CategoryHeader(
+    title: String,
+    onViewAllClick: () -> Unit = {}
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 6.dp),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+
+        Text(
+            text = title,
+            style = MaterialTheme.typography.titleLarge
+        )
+
+        TextButton(onClick = onViewAllClick) {
+            Text("View All")
+        }
+    }
+}

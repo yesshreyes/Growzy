@@ -21,5 +21,8 @@ fun ProductScreen(
 
     val state by viewModel.state.collectAsState()
 
-    ProductContent(state = state)
+    ProductContent(
+        state = state,
+        onToggleWatchlist = { viewModel.toggleWatchlist() }
+    )
 }

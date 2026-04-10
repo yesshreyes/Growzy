@@ -27,23 +27,24 @@ class ProductViewModel(
 
             val result = repository.getFundDetails(schemeCode)
 
-            when (result) {
-                is Resource.Success -> {
-                    _state.value = ProductUiState(
-                        data = result.data,
-                        isLoading = false
-                    )
-                }
-
-                is Resource.Error -> {
-                    _state.value = ProductUiState(
-                        isLoading = false,
-                        error = result.message
-                    )
-                }
-
-                else -> {}
+            if (result is Resource.Success) {
+                _state.value = ProductUiState(
+                    data = result.data,
+                    isLoading = false
+                )
+            } else {
+                _state.value = ProductUiState(
+                    isLoading = false,
+                    error = "Failed"
+                )
             }
         }
+    }
+
+    fun toggleWatchlist() {
+        val current = _state.value
+        _state.value = current.copy(
+            isInWatchlist = !current.isInWatchlist
+        )
     }
 }

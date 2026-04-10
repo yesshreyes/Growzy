@@ -5,5 +5,6 @@ import com.growzy.app.data.remote.dto.FundDetailsDto
 data class ProductUiState(
     val data: FundDetailsDto? = null,
     val isLoading: Boolean = false,
-    val error: String? = null
+    val error: String? = null,
+    val isInWatchlist: Boolean = false
 )

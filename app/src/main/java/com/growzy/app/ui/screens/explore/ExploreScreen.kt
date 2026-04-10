@@ -8,7 +8,8 @@ import com.growzy.app.GrowzyApp
 @Composable
 fun ExploreScreen(
     onFundClick: (Int) -> Unit,
-    onViewAllClick: (String) -> Unit
+    onViewAllClick: (String) -> Unit,
+    onSearchClick: () -> Unit
 ) {
 
     val app = LocalContext.current.applicationContext as GrowzyApp
@@ -22,6 +23,7 @@ fun ExploreScreen(
     ExploreContent(
         state = state,
         onFundClick = onFundClick,
-        onViewAllClick = onViewAllClick
+        onViewAllClick = onViewAllClick,
+        onSearchClick = onSearchClick
     )
 }

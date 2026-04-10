@@ -26,6 +26,9 @@ fun GrowzyNavGraph() {
                 },
                 onViewAllClick = { category ->
                     navController.navigate(ViewAll(category))
+                },
+                onSearchClick = {
+                    navController.navigate(Search)
                 }
             )
         }
@@ -48,7 +51,10 @@ fun GrowzyNavGraph() {
             val args = backStackEntry.toRoute<ViewAll>()
 
             ViewAllScreen(
-                category = args.category
+                category = args.category,
+                onFundClick = { schemeCode ->
+                    navController.navigate(Product(schemeCode))
+                }
             )
         }
 

@@ -1,11 +1,14 @@
 package com.growzy.app.ui.screens.explore
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -15,35 +18,55 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.growzy.app.ui.screens.explore.components.CategorySection
 
+@OptIn(androidx.compose.material3.ExperimentalMaterial3Api::class)
 @Composable
 fun ExploreContent(
     state: ExploreUiState,
     onFundClick: (Int) -> Unit,
-    onViewAllClick: (String) -> Unit
+    onViewAllClick: (String) -> Unit,
+    onSearchClick: () -> Unit = {}
 ) {
 
-    when {
-        state.isLoading -> {
-            LoadingView()
-        }
-
-        state.error != null -> {
-            ErrorView(message = state.error)
-        }
-
-        state.indexFunds.isEmpty() &&
-                state.bluechipFunds.isEmpty() &&
-                state.taxFunds.isEmpty() &&
-                state.largeCapFunds.isEmpty() -> {
-            EmptyView()
-        }
-
-        else -> {
-            ExploreSuccessContent(
-                state = state,
-                onFundClick = onFundClick,
-                onViewAllClick = onViewAllClick
+    androidx.compose.material3.Scaffold(
+        topBar = {
+            androidx.compose.material3.TopAppBar(
+                title = { Text("Explore") },
+                actions = {
+                    androidx.compose.material3.IconButton(onClick = onSearchClick) {
+                        androidx.compose.material3.Icon(
+                            imageVector = androidx.compose.material.icons.Icons.Default.Search,
+                            contentDescription = "Search Funds"
+                        )
+                    }
+                }
             )
+        }
+    ) { paddingValues ->
+        Box(modifier = Modifier.padding(paddingValues)) {
+            when {
+                state.isLoading -> {
+                    LoadingView()
+                }
+
+                state.error != null -> {
+                    ErrorView(message = state.error)
+                }
+
+                state.indexFunds.isEmpty() &&
+                        state.bluechipFunds.isEmpty() &&
+                        state.taxFunds.isEmpty() &&
+                        state.largeCapFunds.isEmpty() -> {
+                    EmptyView()
+                }
+
+                else -> {
+                    ExploreSuccessContent(
+                        state = state,
+                        onFundClick = onFundClick,
+                        onViewAllClick = onViewAllClick
+                    )
+                }
+            }
         }
     }
 }
@@ -55,44 +78,59 @@ fun ExploreSuccessContent(
     onViewAllClick: (String) -> Unit
 ) {
 
-    Column(
+    LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = 16.dp)
+            .padding(horizontal = 16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
 
-        Spacer(modifier = Modifier.height(12.dp))
+        item {
+            Spacer(modifier = Modifier.height(12.dp))
+        }
 
-        CategorySection(
-            title = "Index Funds",
-            funds = state.indexFunds,
-            onFundClick = onFundClick,
-            onViewAllClick = { onViewAllClick("index") }
-        )
+        item {
+            CategorySection(
+                title = "Index Funds",
+                funds = state.indexFunds,
+                onFundClick = onFundClick,
+                onViewAllClick = { onViewAllClick("index") }
+            )
+        }
 
-        CategorySection(
-            title = "Bluechip Funds",
-            funds = state.bluechipFunds,
-            onFundClick = onFundClick,
-            onViewAllClick = { onViewAllClick("bluechip") }
-        )
+        item {
+            CategorySection(
+                title = "Bluechip Funds",
+                funds = state.bluechipFunds,
+                onFundClick = onFundClick,
+                onViewAllClick = { onViewAllClick("bluechip") }
+            )
+        }
 
-        CategorySection(
-            title = "Tax Saver (ELSS)",
-            funds = state.taxFunds,
-            onFundClick = onFundClick,
-            onViewAllClick = { onViewAllClick("tax") }
-        )
+        item {
+            CategorySection(
+                title = "Tax Saver (ELSS)",
+                funds = state.taxFunds,
+                onFundClick = onFundClick,
+                onViewAllClick = { onViewAllClick("tax") }
+            )
+        }
 
-        CategorySection(
-            title = "Large Cap Funds",
-            funds = state.largeCapFunds,
-            onFundClick = onFundClick,
-            onViewAllClick = { onViewAllClick("large cap") }
-        )
-        Spacer(modifier = Modifier.height(16.dp))
+        item {
+            CategorySection(
+                title = "Large Cap Funds",
+                funds = state.largeCapFunds,
+                onFundClick = onFundClick,
+                onViewAllClick = { onViewAllClick("large cap") }
+            )
+        }
+
+        item {
+            Spacer(modifier = Modifier.height(16.dp))
+        }
     }
 }
+
 @Composable
 fun LoadingView() {
 

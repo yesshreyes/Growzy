@@ -66,4 +66,5 @@ dependencies {
     ksp(libs.androidx.room.compiler)
     implementation(libs.androidx.compose.material.icons.extended)
     implementation(libs.androidx.navigation.compose)
+    implementation("com.github.PhilJay:MPAndroidChart:3.1.0")
 }

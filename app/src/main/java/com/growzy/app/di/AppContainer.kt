@@ -7,6 +7,7 @@ import com.growzy.app.data.remote.api.MfApiService
 import com.growzy.app.data.remote.api.RetrofitClient
 import com.growzy.app.data.repository.FundRepositoryImpl
 import com.growzy.app.data.repository.WatchlistRepositoryImpl
+import com.growzy.app.domain.preferences.AppPreferences
 import com.growzy.app.domain.repository.FundRepository
 import com.growzy.app.domain.repository.WatchlistRepository
 
@@ -31,5 +32,9 @@ class AppContainer(context: Context) {
 
     val watchlistRepository: WatchlistRepository by lazy {
         WatchlistRepositoryImpl(watchlistDao)
+    }
+
+    val appPreferences: AppPreferences by lazy {
+        AppPreferences(context)
     }
 }

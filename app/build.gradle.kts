@@ -66,5 +66,6 @@ dependencies {
     ksp(libs.androidx.room.compiler)
     implementation(libs.androidx.compose.material.icons.extended)
     implementation(libs.androidx.navigation.compose)
+    implementation("androidx.datastore:datastore-preferences:1.1.1")
     implementation("com.github.PhilJay:MPAndroidChart:3.1.0")
 }

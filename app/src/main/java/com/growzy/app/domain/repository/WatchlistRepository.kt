@@ -23,4 +23,6 @@ interface WatchlistRepository {
     )
 
     suspend fun deleteFolder(folderId: Int)
+
+    suspend fun checkInWatchlist(schemeCode: Int): Boolean
 }

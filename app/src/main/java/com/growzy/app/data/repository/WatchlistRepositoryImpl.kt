@@ -48,4 +48,8 @@ class WatchlistRepositoryImpl(
         dao.deleteFundsByFolder(folderId)
         dao.deleteFolder(folderId)
     }
+
+    override suspend fun checkInWatchlist(schemeCode: Int): Boolean {
+        return dao.checkInWatchlist(schemeCode)
+    }
 }

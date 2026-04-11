@@ -35,9 +35,11 @@ class ProductViewModel(
 
             when (result) {
                 is Resource.Success -> {
+                    val inWatchlist = watchlistRepository.checkInWatchlist(schemeCode)
                     _state.value = ProductUiState(
                         data = result.data,
-                        isLoading = false
+                        isLoading = false,
+                        isInWatchlist = inWatchlist
                     )
                 }
                 is Resource.Error -> {
@@ -80,6 +82,8 @@ class ProductViewModel(
                     folderId = folderId
                 )
             }
+
+            _state.value = _state.value.copy(isInWatchlist = true)
 
             loadFolders()
         }

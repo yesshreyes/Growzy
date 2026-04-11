@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -21,6 +22,7 @@ import com.growzy.app.ui.screens.folderdetails.FolderDetailsScreen
 import com.growzy.app.ui.screens.watchlist.WatchlistScreen
 import com.growzy.app.ui.screens.product.ProductScreen
 import com.growzy.app.ui.screens.search.SearchScreen
+import com.growzy.app.ui.screens.settings.SettingsScreen
 import com.growzy.app.ui.screens.view.ViewAllScreen
 
 @Composable
@@ -32,7 +34,9 @@ fun GrowzyNavGraph() {
 
     Scaffold(
         bottomBar = {
-            val isTopLevel = currentDestination?.hasRoute<Explore>() == true || currentDestination?.hasRoute<Watchlist>() == true
+            val isTopLevel = currentDestination?.hasRoute<Explore>() == true || 
+                             currentDestination?.hasRoute<Watchlist>() == true ||
+                             currentDestination?.hasRoute<Settings>() == true
             if (isTopLevel) {
                 NavigationBar {
                     NavigationBarItem(
@@ -62,6 +66,20 @@ fun GrowzyNavGraph() {
                         },
                         icon = { Icon(Icons.Default.Favorite, contentDescription = "Watchlist") },
                         label = { Text("Watchlist") }
+                    )
+                    NavigationBarItem(
+                        selected = currentDestination?.hasRoute<Settings>() == true,
+                        onClick = {
+                            navController.navigate(Settings) {
+                                popUpTo(navController.graph.findStartDestination().id) {
+                                    saveState = true
+                                }
+                                launchSingleTop = true
+                                restoreState = true
+                            }
+                        },
+                        icon = { Icon(Icons.Default.Settings, contentDescription = "Settings") },
+                        label = { Text("Settings") }
                     )
                 }
             }
@@ -96,6 +114,10 @@ fun GrowzyNavGraph() {
                         navController.navigate(Explore)
                     }
                 )
+            }
+
+            composable<Settings> {
+                SettingsScreen()
             }
 
             composable<FolderDetails> { backStackEntry ->

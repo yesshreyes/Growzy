@@ -27,4 +27,7 @@ interface WatchlistDao {
 
     @Query("DELETE FROM watchlist_funds WHERE folderId = :folderId")
     suspend fun deleteFundsByFolder(folderId: Int)
+
+    @Query("SELECT EXISTS(SELECT 1 FROM watchlist_funds WHERE schemeCode = :schemeCode)")
+    suspend fun checkInWatchlist(schemeCode: Int): Boolean
 }

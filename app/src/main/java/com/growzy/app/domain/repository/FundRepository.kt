@@ -9,4 +9,6 @@ interface FundRepository {
     suspend fun searchFunds(query: String): Resource<List<FundSearchDto>>
 
     suspend fun getFundDetails(schemeCode: Int): Resource<FundDetailsDto>
+
+    suspend fun clearCache()
 }

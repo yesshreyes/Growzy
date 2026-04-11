@@ -17,4 +17,7 @@ interface ExploreDao {
 
     @Query("DELETE FROM explore_funds WHERE category = :category")
     suspend fun clearCategory(category: String)
+
+    @Query("DELETE FROM explore_funds")
+    suspend fun clearAll()
 }

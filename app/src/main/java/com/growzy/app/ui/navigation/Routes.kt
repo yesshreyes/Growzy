@@ -19,3 +19,6 @@ object Search
 
 @Serializable
 data class FolderDetails(val folderId: Int)
+
+@Serializable
+object Settings

@@ -58,4 +58,8 @@ class FundRepositoryImpl(
             Resource.Error(e.message ?: "Failed to fetch fund details")
         }
     }
+
+    override suspend fun clearCache() {
+        dao.clearAll()
+    }
 }

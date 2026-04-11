@@ -37,4 +37,15 @@ class WatchlistViewModel(
             }
         }
     }
+
+    fun deleteFolder(folderId: Int) {
+        viewModelScope.launch {
+            try {
+                repository.deleteFolder(folderId)
+                loadFolders()
+            } catch (e: Exception) {
+                // Ignore or handle
+            }
+        }
+    }
 }

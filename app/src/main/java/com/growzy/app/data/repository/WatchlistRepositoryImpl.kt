@@ -43,4 +43,9 @@ class WatchlistRepositoryImpl(
     ) {
         dao.removeFund(schemeCode, folderId)
     }
+
+    override suspend fun deleteFolder(folderId: Int) {
+        dao.deleteFundsByFolder(folderId)
+        dao.deleteFolder(folderId)
+    }
 }

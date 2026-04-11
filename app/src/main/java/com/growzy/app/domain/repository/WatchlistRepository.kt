@@ -21,4 +21,6 @@ interface WatchlistRepository {
         schemeCode: Int,
         folderId: Int
     )
+
+    suspend fun deleteFolder(folderId: Int)
 }

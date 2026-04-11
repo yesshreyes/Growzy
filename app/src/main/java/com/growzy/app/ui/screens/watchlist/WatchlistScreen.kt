@@ -22,6 +22,9 @@ fun WatchlistScreen(
     WatchlistContent(
         state = state,
         onFolderClick = onFolderClick,
-        onExploreClick = onExploreClick
+        onExploreClick = onExploreClick,
+        onDeleteFolder = { folderId ->
+            viewModel.deleteFolder(folderId)
+        }
     )
 }

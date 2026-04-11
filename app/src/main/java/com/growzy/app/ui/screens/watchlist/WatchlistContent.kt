@@ -8,6 +8,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.foundation.background
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.graphics.Color
 import com.growzy.app.data.local.entity.WatchlistFolder
 import com.growzy.app.ui.screens.watchlist.components.EmptyWatchlistView
 
@@ -15,7 +21,8 @@ import com.growzy.app.ui.screens.watchlist.components.EmptyWatchlistView
 fun WatchlistContent(
     state: WatchlistUiState,
     onFolderClick: (Int) -> Unit,
-    onExploreClick: () -> Unit
+    onExploreClick: () -> Unit,
+    onDeleteFolder: (Int) -> Unit
 ) {
 
     when {
@@ -42,27 +49,78 @@ fun WatchlistContent(
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
 
-                items(state.folders) { folder ->
-                    FolderItem(folder, onFolderClick)
+                items(
+                    items = state.folders,
+                    key = { it.id }
+                ) { folder ->
+                    FolderItem(
+                        folder = folder,
+                        onClick = onFolderClick,
+                        onDelete = onDeleteFolder
+                    )
                 }
             }
         }
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FolderItem(
     folder: WatchlistFolder,
-    onClick: (Int) -> Unit
+    onClick: (Int) -> Unit,
+    onDelete: (Int) -> Unit
 ) {
-    Card(
-        onClick = { onClick(folder.id) },
-        modifier = Modifier.fillMaxWidth()
+    val dismissState = rememberSwipeToDismissBoxState(
+        confirmValueChange = { dismissValue ->
+            when (dismissValue) {
+                SwipeToDismissBoxValue.EndToStart -> {
+                    onDelete(folder.id)
+                    true
+                }
+                else -> false
+            }
+        }
+    )
+
+    SwipeToDismissBox(
+        state = dismissState,
+        backgroundContent = {
+            val color by animateColorAsState(
+                when (dismissState.targetValue) {
+                    SwipeToDismissBoxValue.EndToStart -> MaterialTheme.colorScheme.errorContainer
+                    else -> Color.Transparent
+                }
+            )
+            val iconColor = MaterialTheme.colorScheme.onErrorContainer
+
+            Box(
+                Modifier
+                    .fillMaxSize()
+                    .background(color)
+                    .padding(horizontal = 20.dp),
+                contentAlignment = Alignment.CenterEnd
+            ) {
+                if (dismissState.targetValue == SwipeToDismissBoxValue.EndToStart) {
+                    Icon(
+                        Icons.Default.Delete,
+                        contentDescription = "Delete Folder",
+                        tint = iconColor
+                    )
+                }
+            }
+        },
+        enableDismissFromStartToEnd = false
     ) {
-        Text(
-            text = folder.name,
-            modifier = Modifier.padding(16.dp)
-        )
+        Card(
+            onClick = { onClick(folder.id) },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(
+                text = folder.name,
+                modifier = Modifier.padding(16.dp)
+            )
+        }
     }
 }
 

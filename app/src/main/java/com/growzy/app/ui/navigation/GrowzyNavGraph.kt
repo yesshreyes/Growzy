@@ -34,7 +34,11 @@ fun GrowzyNavGraph() {
         }
 
         composable<Watchlist> {
-            WatchlistScreen()
+            WatchlistScreen(
+                onFolderClick = {
+                    // TODO: Navigate to FolderDetails
+                }
+            )
         }
 
         composable<Product> { backStackEntry ->

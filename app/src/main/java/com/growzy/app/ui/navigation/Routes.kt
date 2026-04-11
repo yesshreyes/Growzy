@@ -16,3 +16,6 @@ data class ViewAll(val category: String)
 
 @Serializable
 object Search
+
+@Serializable
+data class FolderDetails(val folderId: Int)

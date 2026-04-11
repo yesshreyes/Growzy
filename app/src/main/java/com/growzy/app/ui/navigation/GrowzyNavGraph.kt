@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.*
 import androidx.navigation.toRoute
 import com.growzy.app.ui.screens.explore.ExploreScreen
+import com.growzy.app.ui.screens.folderdetails.FolderDetailsScreen
 import com.growzy.app.ui.screens.watchlist.WatchlistScreen
 import com.growzy.app.ui.screens.product.ProductScreen
 import com.growzy.app.ui.screens.search.SearchScreen
@@ -35,11 +36,20 @@ fun GrowzyNavGraph() {
 
         composable<Watchlist> {
             WatchlistScreen(
-                onFolderClick = { /* later */ },
+                onFolderClick = { folderId ->
+                    navController.navigate(FolderDetails(folderId))
+                },
                 onExploreClick = {
                     navController.navigate(Explore)
                 }
             )
+        }
+
+        composable<FolderDetails> { backStackEntry ->
+
+            val args = backStackEntry.toRoute<FolderDetails>()
+
+            FolderDetailsScreen(folderId = args.folderId)
         }
 
         composable<Product> { backStackEntry ->

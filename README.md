@@ -14,6 +14,30 @@ Growzy is a native Android application designed for exploring and tracking mutua
 
 This project strictly follows the **MVVM (Model-View-ViewModel)** architectural pattern combined with elements of Clean Architecture to ensure separation of concerns, testability, and scalability.
 
+```mermaid
+graph TD
+    classDef ui fill:#4CAF50,stroke:#388E3C,stroke-width:2px,color:white;
+    classDef vm fill:#2196F3,stroke:#1976D2,stroke-width:2px,color:white;
+    classDef domain fill:#FF9800,stroke:#F57C00,stroke-width:2px,color:white;
+    classDef data fill:#9C27B0,stroke:#7B1FA2,stroke-width:2px,color:white;
+    classDef local fill:#607D8B,stroke:#455A64,stroke-width:2px,color:white;
+    classDef remote fill:#F44336,stroke:#D32F2F,stroke-width:2px,color:white;
+
+    UI["📱 UI Layer<br/>(Jetpack Compose)"]:::ui
+    VM["⚙️ ViewModel<br/>(StateFlow)"]:::vm
+    Domain["🧩 Domain Layer<br/>(Interfaces)"]:::domain
+    Data["💾 Data Layer<br/>(Repository Impls)"]:::data
+    DB["🗄️ Local DB<br/>(Room / DataStore)"]:::local
+    API["🌐 Remote APIs<br/>(Retrofit)"]:::remote
+
+    UI -->|"User Actions"| VM
+    VM -->|"Updates UI State"| UI
+    VM -->|"Business Logic Calls"| Domain
+    Domain -->|"Retrieves Data"| Data
+    Data --> API
+    Data --> DB
+```
+
 The codebase is organized into three primary layers:
 1.  **UI Layer (`ui/`):** Contains all Jetpack Compose screens, components, and ViewModels. Responsibilities are divided into stateless composables (`Content` files) and stateful containers (`Screen` files) that handle injected ViewModels and UI state observation.
 2.  **Domain Layer (`domain/`):** Contains the core business logic, including repository interfaces and models designed independently of specific data sources.

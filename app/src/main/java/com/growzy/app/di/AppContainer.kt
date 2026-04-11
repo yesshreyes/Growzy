@@ -6,7 +6,9 @@ import com.growzy.app.data.local.AppDatabase
 import com.growzy.app.data.remote.api.MfApiService
 import com.growzy.app.data.remote.api.RetrofitClient
 import com.growzy.app.data.repository.FundRepositoryImpl
+import com.growzy.app.data.repository.WatchlistRepositoryImpl
 import com.growzy.app.domain.repository.FundRepository
+import com.growzy.app.domain.repository.WatchlistRepository
 
 class AppContainer(context: Context) {
 
@@ -25,5 +27,9 @@ class AppContainer(context: Context) {
 
     val fundRepository: FundRepository by lazy {
         FundRepositoryImpl(apiService, exploreDao)
+    }
+
+    val watchlistRepository: WatchlistRepository by lazy {
+        WatchlistRepositoryImpl(watchlistDao)
     }
 }

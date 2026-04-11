@@ -4,6 +4,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.growzy.app.GrowzyApp
+import com.growzy.app.ui.screens.product.components.AddToWatchlistBottomSheet
 
 @Composable
 fun ProductScreen(
@@ -21,8 +22,20 @@ fun ProductScreen(
 
     val state by viewModel.state.collectAsState()
 
+    var showBottomSheet by remember { mutableStateOf(false) }
+
     ProductContent(
         state = state,
-        onToggleWatchlist = { viewModel.toggleWatchlist() }
+        onToggleWatchlist = {
+            showBottomSheet = true
+        }
     )
+
+    if (showBottomSheet) {
+        AddToWatchlistBottomSheet(
+            folders = emptyList(),
+            onDismiss = { showBottomSheet = false },
+            onAddClick = { _, _ -> }
+        )
+    }
 }

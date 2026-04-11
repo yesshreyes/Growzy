@@ -5,23 +5,34 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.growzy.app.data.local.entity.WatchlistFolder
+import com.growzy.app.ui.screens.watchlist.components.EmptyWatchlistView
 
 @Composable
 fun WatchlistContent(
     state: WatchlistUiState,
-    onFolderClick: (Int) -> Unit
+    onFolderClick: (Int) -> Unit,
+    onExploreClick: () -> Unit
 ) {
 
     when {
         state.isLoading -> {
-            CircularProgressIndicator()
+            Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                CircularProgressIndicator()
+            }
         }
 
         state.error != null -> {
-            Text(text = state.error)
+            Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                Text(text = state.error)
+            }
+        }
+
+        state.folders.isEmpty() -> {
+            EmptyWatchlistView(onExploreClick)
         }
 
         else -> {
@@ -54,3 +65,4 @@ fun FolderItem(
         )
     }
 }
+

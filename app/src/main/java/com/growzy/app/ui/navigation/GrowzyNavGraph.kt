@@ -35,8 +35,9 @@ fun GrowzyNavGraph() {
 
         composable<Watchlist> {
             WatchlistScreen(
-                onFolderClick = {
-                    // TODO: Navigate to FolderDetails
+                onFolderClick = { /* later */ },
+                onExploreClick = {
+                    navController.navigate(Explore)
                 }
             )
         }

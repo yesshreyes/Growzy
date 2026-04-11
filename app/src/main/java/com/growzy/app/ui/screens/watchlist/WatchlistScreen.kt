@@ -7,7 +7,8 @@ import com.growzy.app.GrowzyApp
 
 @Composable
 fun WatchlistScreen(
-    onFolderClick: (Int) -> Unit
+    onFolderClick: (Int) -> Unit,
+    onExploreClick: () -> Unit,
 ) {
 
     val app = LocalContext.current.applicationContext as GrowzyApp
@@ -20,6 +21,7 @@ fun WatchlistScreen(
 
     WatchlistContent(
         state = state,
-        onFolderClick = onFolderClick
+        onFolderClick = onFolderClick,
+        onExploreClick = onExploreClick
     )
 }

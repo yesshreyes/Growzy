@@ -16,13 +16,21 @@ fun ProductScreen(
     val viewModel: ProductViewModel = viewModel(
         factory = ProductViewModelFactory(
             app.container.fundRepository,
+            app.container.watchlistRepository,
             schemeCode
         )
     )
 
     val state by viewModel.state.collectAsState()
+    val folders by viewModel.folders.collectAsState()
 
     var showBottomSheet by remember { mutableStateOf(false) }
+
+    LaunchedEffect(showBottomSheet) {
+        if (showBottomSheet) {
+            viewModel.loadFolders()
+        }
+    }
 
     ProductContent(
         state = state,
@@ -33,9 +41,20 @@ fun ProductScreen(
 
     if (showBottomSheet) {
         AddToWatchlistBottomSheet(
-            folders = emptyList(),
+            folders = folders,
             onDismiss = { showBottomSheet = false },
-            onAddClick = { _, _ -> }
+            onAddClick = { selectedIds, newFolder ->
+
+                val schemeName = state.data?.meta?.scheme_name ?: ""
+
+                viewModel.addToWatchlist(
+                    selectedFolderIds = selectedIds,
+                    newFolderName = newFolder,
+                    schemeName = schemeName
+                )
+
+                showBottomSheet = false
+            }
         )
     }
 }

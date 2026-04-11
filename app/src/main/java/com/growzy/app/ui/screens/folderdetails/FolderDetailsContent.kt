@@ -14,7 +14,10 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.growzy.app.data.local.entity.FundEntity
+import com.growzy.app.ui.theme.GrowzyTheme
 
 @Composable
 fun FolderDetailsContent(
@@ -71,5 +74,24 @@ fun FolderDetailsContent(
                 }
             }
         }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun FolderDetailsContentPreview() {
+    GrowzyTheme {
+        FolderDetailsContent(
+            state = FolderDetailsUiState(
+                funds = listOf(
+                    FundEntity(
+                        schemeCode = 1,
+                        schemeName = "Sample Fund 1",
+                        folderId = 1
+                    )
+                )
+            ),
+            onRemoveClick = {}
+        )
     }
 }

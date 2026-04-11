@@ -14,8 +14,11 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.growzy.app.data.remote.dto.FundSearchDto
 import com.growzy.app.ui.screens.explore.components.FundCard
+import com.growzy.app.ui.theme.GrowzyTheme
 
 @Composable
 fun ViewAllContent(
@@ -58,5 +61,22 @@ fun ViewAllContent(
                 }
             }
         }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun ViewAllContentPreview() {
+    GrowzyTheme {
+        ViewAllContent(
+            state = ViewAllUiState(
+                visibleFunds = listOf(
+                    FundSearchDto(1, "Sample Fund A"),
+                    FundSearchDto(2, "Sample Fund B")
+                )
+            ),
+            onLoadMore = {},
+            onFundClick = {}
+        )
     }
 }

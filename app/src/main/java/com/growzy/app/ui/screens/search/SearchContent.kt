@@ -6,8 +6,11 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.growzy.app.data.remote.dto.FundSearchDto
 import com.growzy.app.ui.screens.explore.components.FundCard
+import com.growzy.app.ui.theme.GrowzyTheme
 
 @Composable
 fun SearchContent(
@@ -58,5 +61,22 @@ fun SearchContent(
                 }
             }
         }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun SearchContentPreview() {
+    GrowzyTheme {
+        SearchContent(
+            state = SearchUiState(
+                query = "Tata",
+                results = listOf(
+                    FundSearchDto(1, "Tata Digital India Fund")
+                )
+            ),
+            onQueryChange = {},
+            onFundClick = {}
+        )
     }
 }

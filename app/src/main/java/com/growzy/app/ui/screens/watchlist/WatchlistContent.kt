@@ -14,8 +14,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import com.growzy.app.data.local.entity.WatchlistFolder
 import com.growzy.app.ui.screens.watchlist.components.EmptyWatchlistView
+import com.growzy.app.ui.theme.GrowzyTheme
 
 @Composable
 fun WatchlistContent(
@@ -121,6 +123,24 @@ fun FolderItem(
                 modifier = Modifier.padding(16.dp)
             )
         }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun WatchlistContentPreview() {
+    GrowzyTheme {
+        WatchlistContent(
+            state = WatchlistUiState(
+                folders = listOf(
+                    WatchlistFolder(id = 1, name = "My Stocks"),
+                    WatchlistFolder(id = 2, name = "Tech Funds")
+                )
+            ),
+            onFolderClick = {},
+            onExploreClick = {},
+            onDeleteFolder = {}
+        )
     }
 }
 

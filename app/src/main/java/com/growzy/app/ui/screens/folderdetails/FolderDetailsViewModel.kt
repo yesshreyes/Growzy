@@ -42,7 +42,7 @@ class FolderDetailsViewModel(
     fun removeFund(schemeCode: Int) {
         viewModelScope.launch {
             repository.removeFund(schemeCode, folderId)
-            loadFunds() // refresh
+            loadFunds()
         }
     }
 }

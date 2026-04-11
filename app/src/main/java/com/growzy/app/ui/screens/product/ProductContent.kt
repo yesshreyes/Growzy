@@ -10,8 +10,12 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.growzy.app.data.remote.dto.FundDetailsDto
+import com.growzy.app.data.remote.dto.MetaDto
 import com.growzy.app.ui.screens.product.components.NavChart
+import com.growzy.app.ui.theme.GrowzyTheme
 
 @Composable
 fun ProductContent(
@@ -130,5 +134,25 @@ fun ProductContent(
                 Spacer(modifier = Modifier.height(16.dp))
             }
         }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun ProductContentPreview() {
+    GrowzyTheme {
+        ProductContent(
+            state = ProductUiState(
+                data = FundDetailsDto(
+                    meta = MetaDto(
+                        fund_house = "Growzy AMC",
+                        scheme_type = "Open Ended",
+                        scheme_name = "Sample Fund"
+                    ),
+                    data = emptyList()
+                )
+            ),
+            onToggleWatchlist = {}
+        )
     }
 }

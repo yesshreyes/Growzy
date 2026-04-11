@@ -14,7 +14,7 @@ import com.growzy.app.data.local.entity.WatchlistFolder
 fun AddToWatchlistBottomSheet(
     folders: List<WatchlistFolder>,
     onDismiss: () -> Unit,
-    onAddClick: (List<Int>, String) -> Unit // selected folders + new folder name
+    onAddClick: (List<Int>, String) -> Unit
 ) {
 
     var selectedFolders by remember { mutableStateOf(setOf<Int>()) }

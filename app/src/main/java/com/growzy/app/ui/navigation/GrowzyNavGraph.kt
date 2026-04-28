@@ -1,6 +1,7 @@
 package com.growzy.app.ui.navigation
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.fadeIn
@@ -27,8 +28,10 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.*
@@ -140,7 +143,7 @@ fun GrowzyNavGraph() {
 
 @Composable
 private fun GlassBottomNav(
-    currentDestination: androidx.navigation.NavDestination?,
+    currentDestination: NavDestination?,
     onNavigate: (Any) -> Unit
 ) {
     Box(
@@ -197,10 +200,10 @@ private fun GlassBottomNav(
 private fun NavigationItem(
     selected: Boolean,
     onClick: () -> Unit,
-    icon: androidx.compose.ui.graphics.vector.ImageVector,
+    icon: ImageVector,
     label: String
 ) {
-    val containerColor by androidx.compose.animation.animateColorAsState(
+    val containerColor by animateColorAsState(
         targetValue = if (selected)
             MaterialTheme.colorScheme.primary.copy(alpha = 0.15f)
         else
@@ -209,7 +212,7 @@ private fun NavigationItem(
         label = "nav_bg"
     )
 
-    val iconColor by androidx.compose.animation.animateColorAsState(
+    val iconColor by animateColorAsState(
         targetValue = if (selected)
             MaterialTheme.colorScheme.primary
         else
@@ -237,9 +240,9 @@ private fun NavigationItem(
                 modifier = Modifier.size(24.dp)
             )
             if (selected) {
-                androidx.compose.animation.AnimatedVisibility(
+                AnimatedVisibility(
                     visible = true,
-                    enter = fadeIn() + androidx.compose.animation.slideInVertically { it / 2 },
+                    enter = fadeIn() + slideInVertically { it / 2 },
                     exit = fadeOut()
                 ) {
                     Text(

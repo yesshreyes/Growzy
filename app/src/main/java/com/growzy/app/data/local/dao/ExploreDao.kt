@@ -9,7 +9,7 @@ import com.growzy.app.data.local.entity.ExploreFundEntity
 @Dao
 interface ExploreDao {
 
-    @Insert(onConflict = OnConflictStrategy.Companion.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertFunds(funds: List<ExploreFundEntity>)
 
     @Query("SELECT * FROM explore_funds WHERE category = :category")

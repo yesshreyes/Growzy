@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-class ProductViewModel(
+class  ProductViewModel(
     private val fundRepository: FundRepository,
     private val watchlistRepository: WatchlistRepository,
     private val schemeCode: Int

@@ -24,7 +24,7 @@ class AppContainer(context: Context) {
         .build()
 
     private val exploreDao = database.exploreDao()
-    val watchlistDao = database.watchlistDao()
+    private val watchlistDao = database.watchlistDao()
 
     val fundRepository: FundRepository by lazy {
         FundRepositoryImpl(apiService, exploreDao)
